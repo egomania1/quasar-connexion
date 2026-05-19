@@ -1,77 +1,52 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Connexion</title>
-
-    <!-- quasar css -->
-    <link href="https://cdn.jsdelivr.net/npm/quasar@2/dist/quasar.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500|Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/quasar@2/dist/quasar.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <title>Connexion</title>
 </head>
-
 <body>
 
 <div id="app">
-    <div class="row justify-center">
-        <div class="col-md-4 col-xs-10 formulaire">
+  <q-layout view="hHh lpR fFf">
+    <q-page-container>
+      <q-page class="flex flex-center page-fond">
+        <div class="carte">
 
-            <q-card>
-                <q-card-section>
-                    <p class="text-h6">Connexion</p>
-                </q-card-section>
+          <q-card>
+            <q-card-section class="text-center text-white titre-carte">
+              <div>Connexion</div>
+            </q-card-section>
 
-                <q-card-section>
+            <q-card-section>
+              <div class="label-champ">Nom d'utilisateur</div>
+              <q-input v-model="nom" outlined dense class="q-mb-md"></q-input>
 
-                    <!-- champ nom d'utilisateur -->
-                    <q-input v-model="utilisateur" label="Nom d'utilisateur" outlined class="q-mb-sm"></q-input>
+              <div class="label-champ">Mot de passe</div>
+              <q-input v-model="mdp" outlined dense :type="voir ? 'text' : 'password'" class="q-mb-md">
+                <template #append>
+                  <q-icon :name="voir ? 'visibility_off' : 'visibility'" style="cursor:pointer" @click="voir = !voir"/>
+                </template>
+              </q-input>
 
-                    <!-- champ mot de passe -->
-                    <q-input v-model="motdepasse" label="Mot de passe" type="password" outlined class="q-mb-md"></q-input>
+              <div v-if="msg" class="msg-erreur">{{ msg }}</div>
 
-                    <q-btn label="Valider" color="blue" class="full-width" @click="valider"></q-btn>
-
-                </q-card-section>
-            </q-card>
+              <q-btn label="Se connecter" class="btn-connexion" @click="connecter"/>
+            </q-card-section>
+          </q-card>
 
         </div>
-    </div>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </div>
 
-<!-- vue et quasar js -->
 <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/quasar@2/dist/quasar.umd.min.js"></script>
-
-<script>
-
-    const app = Vue.createApp({
-        data() {
-            return {
-                utilisateur: '',
-                motdepasse: ''
-            }
-        },
-        methods: {
-            valider() {
-
-                if (this.utilisateur == '' || this.motdepasse == '') {
-                    alert('Remplissez tous les champs')
-                    return
-                }
-
-                if (this.utilisateur == 'admin' && this.motdepasse == '1234') {
-                    alert('Connexion réussie !')
-                } else {
-                    alert('Identifiants incorrects')
-                }
-            }
-        }
-    })
-
-    app.use(Quasar)
-    app.mount('#app')
-
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
